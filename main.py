@@ -15,8 +15,6 @@ def on_resize(event):
     global root_w, root_h, count_w
     root_w, root_h = event.width, event.height
     graph_frame.configure(height=root_h - OUTILS_SIZE)
-    count_w = int(root_w / CASE_SIZE)
-    print(f"count_w: {count_w}")
 
 def create_case():
     for j in range(count_h):
