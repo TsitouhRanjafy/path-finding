@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from config import *
+import math
 
 # PROPERTY
 CASE_SIZE = 10
@@ -28,14 +29,26 @@ def on_case_cliked(col, row):
     pos_node[current_node] = tuple((col,row))
     print(f"{nodes} : {pos_node}")
 
+def on_leave(event, col, row):
+    global pos_node
+    if (col, row) in pos_node.values():
+        return
+    event.widget['background'] = white_1
+
+def on_enter(event, col, row):
+    global pos_node
+    if (col, row) in pos_node.values():
+        return
+    event.widget['background'] = white_2
+
 def create_case():
     for j in range(count_h):
         for i in range(count_w):
             f = Frame(graph_frame, bg=white_1, height=CASE_SIZE, width=CASE_SIZE, highlightcolor=black_2, highlightthickness=border_1)
             f.grid(column=i, row=j, sticky=NSEW)
             f.bind("<Button-1>", lambda event, frame=f, col_index=i, row_index=j:((frame.config(bg=black_1)), on_case_cliked(col_index, row_index)))
-            # label = Label(f, text=f"{i+j}", bg=white_1, font=("Arial", 6))
-            # label.pack(fill="both", expand=True)
+            f.bind("<Enter>", lambda event, col_index=i, row_index=j: on_enter(event, col_index, row_index))
+            f.bind("<Leave>", lambda event, col_index=i, row_index=j: on_leave(event, col_index, row_index))
 
 def reinit(event):
     global current_node
