@@ -21,6 +21,8 @@ nodes = list()
 pos_node = dict()
 def on_case_cliked(col, row):
     global current_node
+    if tuple((col,row)) in pos_node.values():
+        return
     current_node += 1
     nodes.append(current_node)
     pos_node[current_node] = tuple((col,row))
