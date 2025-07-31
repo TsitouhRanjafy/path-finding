@@ -34,9 +34,6 @@ def create_case():
             f.bind("<Button-1>", lambda event, frame=f, col_index=i, row_index=j:((frame.config(bg=black_1)), on_case_cliked(col_index, row_index)))
             # label = Label(f, text=f"{i+j}", bg=white_1, font=("Arial", 6))
             # label.pack(fill="both", expand=True)
-    reinit_btn = Button(graph_frame, width=1, height=1, bg="red")
-    reinit_btn.place(x=10, y=10)
-    reinit_btn.bind("<Button-1>", reinit)
 
 def reinit(event):
     global current_node
@@ -46,6 +43,7 @@ def reinit(event):
     del nodes[:]
     pos_node.clear()
     create_case()  
+#######################################################
 
 # MAIN FRAME
 root = Tk()
@@ -61,8 +59,14 @@ graph_frame.pack(side="top", fill="both", expand=True)
 graph_frame.columnconfigure(tuple(range(0, count_w)), weight=1)
 graph_frame.rowconfigure(tuple(range(0, count_h)), weight=1)
 
-create_case()
+# RELOAD BUTTON
+icon = PhotoImage(file="reload.png")
+reinit_btn = Button(root, width=24, height=24, image=icon, bg=white_1)
+reinit_btn.place(x=10, y=10)
+reinit_btn.image = icon
+reinit_btn.bind("<Button-1>", reinit)
 
+create_case()
 
 # OUTILS FRAME
 outils_frame = Frame(root, bg=black_1, height=OUTILS_SIZE,highlightcolor=black_2, highlightthickness=border_1)
