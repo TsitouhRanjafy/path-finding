@@ -58,7 +58,6 @@ def reinit(event):
     del nodes[:]
     pos_node.clear()
     create_case()  
-#######################################################
 
 # MAIN FRAME
 root = Tk()
@@ -84,7 +83,64 @@ reinit_btn.bind("<Button-1>", reinit)
 create_case()
 
 # OUTILS FRAME
-outils_frame = Frame(root, bg=black_1, height=OUTILS_SIZE,highlightcolor=black_2, highlightthickness=border_1)
-outils_frame.pack(side="top", fill=X)
+outils_frame = Frame(root, bg=black_1, background=black_1,height=OUTILS_SIZE,highlightcolor=black_2, highlightthickness=border_1)
+outils_frame.pack(fill=X, side="bottom")
+outils_frame.columnconfigure((0,3), weight=1)
+outils_frame.rowconfigure(0, weight=1)
+
+# Insert case
+o1 = Frame(outils_frame, height=100, width=100, bg=black_1, highlightbackground="red", highlightthickness=1, padx=10, pady=5)
+o1.rowconfigure((0,1), weight=1)
+o1.grid(column=0, row=0, sticky=NSEW)
+
+o1_f1 = Frame(o1, highlightbackground="green", highlightthickness=1)
+o1_f1.pack(fill=X, expand=True)
+o1_f1_f_insert = Frame(o1_f1, height=30, width=100, bg=white_1)
+o1_f1_f_insert.pack(fill=Y)
+label = Label(o1_f1_f_insert, text="insert", font=("Arial", 13))
+label.pack()
+
+o1_f2 = Frame(o1, highlightbackground="green", highlightthickness=1)
+o1_f2.columnconfigure((0,1), weight=1)
+o1_f2.pack(fill=X, expand=True)
+o1_f2_btn_node = Button(o1_f2, width=5, height=1)
+o1_f2_btn_node_label = Label(o1_f2_btn_node, text="node", font=("Arial", 16))
+o1_f2_btn_node_label.pack()
+o1_f2_btn_node.grid(column=0, row=0, sticky=NSEW)
+
+o1_f2_btn_path = Button(o1_f2, width=5, height=1, padx=1)
+o1_f2_btn_path_label = Label(o1_f2_btn_path , text="path", font=("Arial", 16))
+o1_f2_btn_path_label.pack()
+o1_f2_btn_path.grid(column=1, row=0, sticky=NSEW)
+
+o2 = Frame(outils_frame, height=100, width=100, bg=black_1, highlightbackground="red", highlightthickness=1)
+o2.grid(column=1, row=0, sticky=NSEW)
+
+o3 = Frame(outils_frame, height=100, width=100, bg=black_1, highlightbackground="red", highlightthickness=1)
+o3.grid(column=2, row=0, sticky=NSEW)
+
+# Check case
+o4 = Frame(outils_frame, height=100, width=100, bg=black_1, highlightbackground="red", highlightthickness=1)
+o4.grid(column=3, row=0, sticky=NSEW)
+
+o4_f1 = Frame(o4, highlightbackground="green", highlightthickness=1)
+o4_f1.pack(fill=X, expand=True)
+o4_f1_f_insert = Frame(o4_f1, height=30, width=100, bg=white_1)
+o4_f1_f_insert.pack(fill=Y)
+label = Label(o4_f1_f_insert, text="search", font=("Arial", 13))
+label.pack()
+
+o4_f2 = Frame(o4, highlightbackground="green", highlightthickness=1)
+o4_f2.columnconfigure((0,1), weight=1)
+o4_f2.pack(fill=X, expand=True)
+o4_f2_btn_node = Button(o4_f2, width=5, height=5)
+o4_f2_btn_node_label = Label(o4_f2_btn_node, text="connex", font=("Arial", 16))
+o4_f2_btn_node_label.pack(expand=True)
+o4_f2_btn_node.grid(column=0, row=0, sticky=NSEW)
+
+o4_f2_btn_path = Button(o4_f2, width=5, height=5)   
+o4_f2_btn_path_label = Label(o4_f2_btn_path , text="euler path", font=("Arial", 16))
+o4_f2_btn_path_label.pack(expand=True)
+o4_f2_btn_path.grid(column=1, row=0, sticky=NSEW)
 
 root.mainloop()
