@@ -1,7 +1,5 @@
 from tkinter import *
-from tkinter import ttk
 from config import *
-import math
 
 # PROPERTY
 CASE_SIZE = 10
@@ -89,44 +87,44 @@ outils_frame.columnconfigure((0,3), weight=1)
 outils_frame.rowconfigure(0, weight=1)
 
 # Insert case
-o1 = Frame(outils_frame, height=100, width=100, bg=black_1, highlightbackground="red", highlightthickness=1, padx=10, pady=5)
+o1 = Frame(outils_frame, height=100, width=100, bg=black_1, padx=10, pady=5)
 o1.rowconfigure((0,1), weight=1)
 o1.grid(column=0, row=0, sticky=NSEW)
 
-o1_f1 = Frame(o1, highlightbackground="green", highlightthickness=1)
+o1_f1 = Frame(o1)
 o1_f1.pack(fill=X, expand=True)
 o1_f1_f_insert = Frame(o1_f1, height=30, width=100, bg=white_1)
 o1_f1_f_insert.pack(fill=Y)
 label = Label(o1_f1_f_insert, text="insert", font=("Arial", 10))
 label.pack()
 
-o1_f2 = Frame(o1, highlightbackground="green", highlightthickness=1)
+o1_f2 = Frame(o1)
 o1_f2.columnconfigure((0,1), weight=1)
 o1_f2.pack(fill=X, expand=True)
 o1_f2_btn_node = Button(o1_f2, text="node", font=("Arial", 13), width=5, height=1)
 o1_f2_btn_node.grid(column=0, row=0, sticky=NSEW)
 
-o1_f2_btn_path = Button(o1_f2, text="path", font=("Arial", 13), width=5, height=1, padx=1)
+o1_f2_btn_path = Button(o1_f2, text="path", font=("Arial", 13), width=5, height=1)
 o1_f2_btn_path.grid(column=1, row=0, sticky=NSEW)
 
-o2 = Frame(outils_frame, height=100, width=100, bg=black_1, highlightbackground="red", highlightthickness=1)
+o2 = Frame(outils_frame, height=100, width=100, bg=black_1)
 o2.grid(column=1, row=0, sticky=NSEW)
 
-o3 = Frame(outils_frame, height=100, width=100, bg=black_1, highlightbackground="red", highlightthickness=1)
+o3 = Frame(outils_frame, height=100, width=100, bg=black_1)
 o3.grid(column=2, row=0, sticky=NSEW)
 
 # Check case
-o4 = Frame(outils_frame, height=100, width=100, bg=black_1, highlightbackground="red", highlightthickness=1)
+o4 = Frame(outils_frame, height=100, width=100, bg=black_1, padx=10, pady=5)
 o4.grid(column=3, row=0, sticky=NSEW)
 
-o4_f1 = Frame(o4, highlightbackground="green", highlightthickness=1)
+o4_f1 = Frame(o4)
 o4_f1.pack(fill=X, expand=True)
 o4_f1_f_insert = Frame(o4_f1, height=30, width=100, bg=white_1)
 o4_f1_f_insert.pack(fill=Y)
 label = Label(o4_f1_f_insert, text="search", font=("Arial", 10))
 label.pack()
 
-o4_f2 = Frame(o4, highlightbackground="green", highlightthickness=1)
+o4_f2 = Frame(o4)
 o4_f2.columnconfigure((0,1), weight=1)
 o4_f2.pack(fill=X, expand=True)
 o4_f2_btn_node = Button(o4_f2, text="connex", font=("Arial", 13), width=5, height=1)
