@@ -1,5 +1,6 @@
 from tkinter import *
 from config import *
+from helper import *
 
 # PROPERTY
 CASE_SIZE = 10
@@ -9,34 +10,26 @@ root_h = 400
 count_w = int(root_w / CASE_SIZE)
 count_h = int((root_h - OUTILS_SIZE) / CASE_SIZE)
 
+
 # FUNCTION
 def on_resize(event):
     global root_w, root_h, count_w
     root_w, root_h = event.width, event.height
     graph_frame.configure(height=root_h - OUTILS_SIZE)
 
-current_node = 0
-nodes = list()
-pos_node = dict()
-def on_case_cliked(col, row):
-    global current_node
-    if tuple((col,row)) in pos_node.values():
-        return
-    current_node += 1
-    nodes.append(current_node)
-    pos_node[current_node] = tuple((col,row))
-    print(f"{nodes} : {pos_node}")
-
 def on_leave(event, col, row):
-    global pos_node
-    if (col, row) in pos_node.values():
+    global node_to_xy, xy_to_node, tmp_color
+    if xy_to_node.get((col,row), False):
         return
-    event.widget['background'] = white_1
+    event.widget['background'] = tmp_color
+    tmp_color = ()
 
+tmp_color = ()
 def on_enter(event, col, row):
-    global pos_node
-    if (col, row) in pos_node.values():
+    global node_to_xy, xy_to_node, tmp_color
+    if xy_to_node.get((col,row), False):
         return
+    tmp_color = event.widget.cget("background")
     event.widget['background'] = white_2
 
 def create_case():
@@ -44,9 +37,10 @@ def create_case():
         for i in range(count_w):
             f = Frame(graph_frame, bg=white_1, height=CASE_SIZE, width=CASE_SIZE, highlightcolor=black_2, highlightthickness=border_1)
             f.grid(column=i, row=j, sticky=NSEW)
-            f.bind("<Button-1>", lambda event, frame=f, col_index=i, row_index=j:((frame.config(bg=black_1)), on_case_cliked(col_index, row_index)))
+            f.bind("<Button-1>", lambda event, frame=f, col_index=i, row_index=j: (on_case_cliked(col_index, row_index, event)))
             f.bind("<Enter>", lambda event, col_index=i, row_index=j: on_enter(event, col_index, row_index))
             f.bind("<Leave>", lambda event, col_index=i, row_index=j: on_leave(event, col_index, row_index))
+            pos_to_widget_case[(i, j)] = f
 
 def reinit(event):
     global current_node
@@ -54,7 +48,9 @@ def reinit(event):
         frame.destroy()  
     current_node = 0
     del nodes[:]
-    pos_node.clear()
+    del nodes_adj[:]
+    node_to_xy.clear()
+    xy_to_node.clear(   )
     create_case()  
 
 # MAIN FRAME
@@ -102,9 +98,11 @@ o1_f2 = Frame(o1)
 o1_f2.columnconfigure((0,1), weight=1)
 o1_f2.pack(fill=X, expand=True)
 o1_f2_btn_node = Button(o1_f2, text="node", font=("Arial", 13), width=5, height=1)
+o1_f2_btn_node.bind("<Button-1>", lambda event: toggle_insertion('n'))
 o1_f2_btn_node.grid(column=0, row=0, sticky=NSEW)
 
 o1_f2_btn_path = Button(o1_f2, text="path", font=("Arial", 13), width=5, height=1)
+o1_f2_btn_path.bind("<Button-1>", lambda eveng: toggle_insertion('p'))
 o1_f2_btn_path.grid(column=1, row=0, sticky=NSEW)
 
 o2 = Frame(outils_frame, height=100, width=100, bg=black_1)

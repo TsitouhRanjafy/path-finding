@@ -1,0 +1,56 @@
+from ctypes import *
+import os
+
+# init
+path = os.getcwd()
+_mylib = CDLL(os.path.join(path, "lib/graph.so"))
+
+# define custome type
+class KV_ITEM(Structure):
+    _fields_= [
+        ("key", c_size_t),
+        ("value", POINTER(c_size_t))
+    ]
+
+# define type params and retuned function
+_mylib.arr_put.argtypes = [POINTER(POINTER(c_size_t)), c_size_t]
+_mylib.arr_get.argtypes = [POINTER(POINTER(c_size_t)), c_size_t]
+_mylib.arr_free.argtypes = [POINTER(POINTER(c_size_t))]
+_mylib.hm_put.argtypes = [POINTER(POINTER(KV_ITEM)), c_size_t, POINTER(c_size_t)]
+_mylib.free_graph.argtypes = [POINTER(POINTER(KV_ITEM))]
+_mylib.EulerPathByFleury.argtypes = [POINTER(KV_ITEM), POINTER(c_size_t), c_size_t]
+_mylib.EulerPathByFleury.restype = POINTER(c_size_t)
+_mylib.HamiltonienPathByFleury.argtypes = [POINTER(KV_ITEM), POINTER(c_size_t), c_size_t]
+_mylib.HamiltonienPathByFleury.restype = POINTER(c_size_t)
+
+# init graph
+adj = POINTER(KV_ITEM)()
+item = POINTER(c_size_t)()
+
+# function
+def add_adj(node, list_adj):
+    item = POINTER(c_size_t)()
+    for i in list_adj:
+        _mylib.arr_put(item, i)
+    _mylib.hm_put(adj, node, item)
+    
+def print_path(path):
+    for i in range(_mylib.arr_len(path)):
+        print(f"i = {i}, node: {_mylib.arr_get(path, i)}")
+        
+add_adj(0, [9,3,5])
+add_adj(9, [0, 5])
+add_adj(3, [0, 5])
+add_adj(5, [9, 0, 3])
+
+
+# find a euler path
+euler_chemin = POINTER(c_size_t)()
+euler_chemin = _mylib.EulerPathByFleury(adj, (c_size_t * 4)(0,3,5,9), 4)
+
+print_path(euler_chemin)
+
+# free
+_mylib.free_graph(adj)
+_mylib.arr_free(euler_chemin)
+print(_mylib)
