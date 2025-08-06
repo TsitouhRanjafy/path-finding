@@ -1,6 +1,7 @@
 from tkinter import *
 from config import *
 from helper import *
+import helper
 
 # PROPERTY
 CASE_SIZE = 10
@@ -19,7 +20,7 @@ def on_resize(event):
 
 def on_leave(event, col, row):
     global node_to_xy, xy_to_node, tmp_color
-    if xy_to_node.get((col,row), False):
+    if xy_to_node.get((col,row), 'f') != 'f':
         return
     event.widget['background'] = tmp_color
     tmp_color = ()
@@ -27,7 +28,7 @@ def on_leave(event, col, row):
 tmp_color = ()
 def on_enter(event, col, row):
     global node_to_xy, xy_to_node, tmp_color
-    if xy_to_node.get((col,row), False):
+    if xy_to_node.get((col,row), 'f') != 'f':
         return
     tmp_color = event.widget.cget("background")
     event.widget['background'] = white_2
@@ -43,14 +44,13 @@ def create_case():
             pos_to_widget_case[(i, j)] = f
 
 def reinit(event):
-    global current_node
     for frame in graph_frame.winfo_children():
         frame.destroy()  
-    current_node = 0
+    helper.current_node = 0
     del nodes[:]
     del nodes_adj[:]
     node_to_xy.clear()
-    xy_to_node.clear(   )
+    xy_to_node.clear()
     create_case()  
 
 # MAIN FRAME

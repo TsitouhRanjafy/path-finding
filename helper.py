@@ -1,4 +1,5 @@
 from config import *
+from interface import *
 
 # VARIABLE
 current_node = 0
@@ -16,18 +17,35 @@ def on_case_cliked(col, row, event):
         handle_node_insertion(col, row, event)
     else:
         handle_path_insertion(col, row, event)
+    print(nodes)
+    print(nodes_adj)
+    print(xy_to_node)
+
+def handle_node_insertion(col, row, event):
+    global current_node, xy_to_node
+    event.widget.config(bg=black_1)
+    if xy_to_node.get((col,row), 'f') != 'f':
+        return
+    nodes.append(current_node)
+    nodes_adj.append({})
+    node_to_xy[current_node] = tuple((col,row))
+    xy_to_node[tuple((col,row))] = current_node
+    current_node += 1
 
 def handle_path_insertion(col, row, event):
     global couple_node_for_path
-    if not xy_to_node.get((col, row), False):
+    if xy_to_node.get((col, row), 'f') == 'f':
         return
     if (len(couple_node_for_path) == 1) and (couple_node_for_path[0] == (col, row)):
         del couple_node_for_path[:]
         return
     couple_node_for_path.append((col,row))
+    print(couple_node_for_path)
     if len(couple_node_for_path) == 2:
+        # print(f":: {xy_to_node.get(couple_node_for_path[0])} to {xy_to_node.get(couple_node_for_path[1])} ")
         trace_path(couple_node_for_path[0], couple_node_for_path[1])
         couple_node_for_path = list()
+    
 
 
 def  trace_path(node_pos_1, node_pos_2):
@@ -49,7 +67,6 @@ def  trace_path(node_pos_1, node_pos_2):
         start_i = node_pos_1[0] + i
         start_j = node_pos_1[1] + j
 
-        print(f"start: {start_i}, {start_j} to {node_pos_2[0]}, {node_pos_2[1]} | {i},{j}")
         for k in range(abs(node_pos_1[0] - node_pos_2[0]) - 1):
             f = pos_to_widget_case.get((start_i, start_j))
             f.config(bg="red")
@@ -64,26 +81,11 @@ def  trace_path(node_pos_1, node_pos_2):
             start_i = start_i + i
         j = - (node_pos_1[1] - node_pos_2[1]) / abs(node_pos_1[1] - node_pos_2[1])
         start_j = node_pos_1[1] 
-        print(start_i)
         for k in range(abs(node_pos_1[1] - node_pos_2[1])):
             f = pos_to_widget_case.get((start_i - i, start_j))
             f.config(bg="red")
             start_j = start_j + j
 
-def handle_node_insertion(col, row, event):
-    global current_node, xy_to_node
-    event.widget.config(bg=black_1)
-    if xy_to_node.get((col,row), False):
-        return
-    current_node += 1
-    nodes.append(current_node)
-    nodes_adj.append({})
-    node_to_xy[current_node] = tuple((col,row))
-    xy_to_node[tuple((col,row))] = current_node
-    print(f"{nodes} : {node_to_xy}")
-    print(f"{nodes} : {nodes_adj}")
-
 def toggle_insertion(insert_name_char):
     global current_insertion
     current_insertion = insert_name_char
-    print(f"{current_insertion}")
