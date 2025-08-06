@@ -1,7 +1,7 @@
-from tkinter import *
 from config import *
 from helper import *
 import helper
+from root import *
 
 # PROPERTY
 CASE_SIZE = 10
@@ -53,9 +53,6 @@ def reinit(event):
     xy_to_node.clear()
     create_case()  
 
-# MAIN FRAME
-root = Tk()
-root.configure(bg=white_1, highlightcolor=black_2, highlightthickness=border_1)
 root.geometry(f"{root_w}x{root_h}")
 root.bind("<Configure>", on_resize)
 root.title("Path Finding")
@@ -72,7 +69,7 @@ icon = PhotoImage(file="reload.png")
 reinit_btn = Button(root, width=24, height=24, image=icon, bg=white_1)
 reinit_btn.place(x=10, y=10)
 reinit_btn.image = icon
-reinit_btn.bind("<Button-1>", reinit)
+reinit_btn.bind("<Button-1>", lambda event: test(0, 1))
 
 create_case()
 
@@ -125,10 +122,13 @@ label.pack()
 o4_f2 = Frame(o4)
 o4_f2.columnconfigure((0,1), weight=1)
 o4_f2.pack(fill=X, expand=True)
-o4_f2_btn_node = Button(o4_f2, text="connex", font=("Arial", 13), width=5, height=1)
-o4_f2_btn_node.grid(column=0, row=0, sticky=NSEW)
+o4_f2_btn_search_h_path = Button(o4_f2, text="hamiltonian", font=("Arial", 13), width=5, height=1)
+o4_f2_btn_search_h_path.bind("<Button-1>", search_h_path)
+o4_f2_btn_search_h_path.grid(column=0, row=0, sticky=NSEW)
 
-o4_f2_btn_path = Button(o4_f2, text="euler path", font=("Arial", 13), width=5, height=1)   
-o4_f2_btn_path.grid(column=1, row=0, sticky=NSEW)
+o4_f2_btn_e_path = Button(o4_f2, text="euler path", font=("Arial", 13), width=5, height=1)   
+o4_f2_btn_e_path.bind("<Button-1>", search_e_path)
+o4_f2_btn_e_path.grid(column=1, row=0, sticky=NSEW)
+
 
 root.mainloop()

@@ -26,6 +26,7 @@ _mylib.HamiltonienPathByFleury.restype = POINTER(c_size_t)
 # init graph
 adj = POINTER(KV_ITEM)()
 item = POINTER(c_size_t)()
+euler_chemin = POINTER(c_size_t)()
 
 # function
 def add_adj(node, list_adj):
@@ -33,22 +34,24 @@ def add_adj(node, list_adj):
     for i in list_adj:
         _mylib.arr_put(item, i)
     _mylib.hm_put(adj, node, item)
-    
+
+def find_euler_path(list_node):
+    global euler_chemin
+    euler_chemin = _mylib.EulerPathByFleury(adj, (c_size_t * len(list_node))(*list_node), len(list_node))
+    return euler_chemin[:len(list_node)]
+
+
+
 def print_path(path):
     for i in range(_mylib.arr_len(path)):
         print(f"i = {i}, node: {_mylib.arr_get(path, i)}")
+
         
 add_adj(0, [9,3,5])
 add_adj(9, [0, 5])
 add_adj(3, [0, 5])
 add_adj(5, [9, 0, 3])
 
-
-# find a euler path
-euler_chemin = POINTER(c_size_t)()
-euler_chemin = _mylib.EulerPathByFleury(adj, (c_size_t * 4)(0,3,5,9), 4)
-
-print_path(euler_chemin)
 
 # free
 _mylib.free_graph(adj)
