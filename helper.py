@@ -56,8 +56,19 @@ def  trace_path(node_pos_1, node_pos_2):
             start_i = start_i + i
             start_j = start_j + j
     else:
-        pass
-
+        i = - (node_pos_1[0] - node_pos_2[0]) / abs(node_pos_1[0] - node_pos_2[0])
+        start_i = node_pos_1[0] + i
+        for k in range(abs(node_pos_1[0] - node_pos_2[0])):
+            f = pos_to_widget_case.get((start_i, node_pos_1[1]))
+            f.config(bg="red")
+            start_i = start_i + i
+        j = - (node_pos_1[1] - node_pos_2[1]) / abs(node_pos_1[1] - node_pos_2[1])
+        start_j = node_pos_1[1] 
+        print(start_i)
+        for k in range(abs(node_pos_1[1] - node_pos_2[1])):
+            f = pos_to_widget_case.get((start_i - i, start_j))
+            f.config(bg="red")
+            start_j = start_j + j
 
 def handle_node_insertion(col, row, event):
     global current_node, xy_to_node
