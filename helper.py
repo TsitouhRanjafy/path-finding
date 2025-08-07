@@ -43,60 +43,84 @@ def handle_path_insertion(col, row, event):
     if len(couple_node_for_path) == 2:
         nodes_adj[xy_to_node.get(couple_node_for_path[0])].add(xy_to_node.get(couple_node_for_path[1]))
         nodes_adj[xy_to_node.get(couple_node_for_path[1])].add(xy_to_node.get(couple_node_for_path[0]))
-        trace_path(couple_node_for_path[0], couple_node_for_path[1], "red", 0.005)
+        trace_path(couple_node_for_path[0], couple_node_for_path[1], "red", 0.005, True)
         couple_node_for_path = list()
 
-def  trace_path(node_pos_1, node_pos_2, color_path, sleep_time_s):
+def  trace_path(node_pos_1, node_pos_2, color_path, sleep_time_s, is_insertion):
     if node_pos_1[0] == node_pos_2[0]:
-        j = - (node_pos_1[1] - node_pos_2[1]) / abs(node_pos_1[1] - node_pos_2[1])
-        start_j = node_pos_1[1] + j
-        for tmp in range(abs(node_pos_1[1] - node_pos_2[1]) - 1):
-            f = pos_to_widget_case.get((node_pos_1[0],  start_j))
-            f.config(bg=color_path)
-            start_j = start_j + j
-            root.update()
-            time.sleep(sleep_time_s)
+        trace_path_v_or_h(node_pos_1, node_pos_2, color_path, sleep_time_s, 1)
     elif node_pos_1[1] == node_pos_2[1]:
-        i = - (node_pos_1[0] - node_pos_2[0]) / abs(node_pos_1[0] - node_pos_2[0])
-        start_i = node_pos_1[0] + i
-        for tmp in range(abs(node_pos_1[0] - node_pos_2[0]) - 1):
-            f = pos_to_widget_case.get((start_i, node_pos_1[1]))
-            f.config(bg=color_path)
-            start_i = start_i + i
-            root.update()
-            time.sleep(sleep_time_s)
+        trace_path_v_or_h(node_pos_1, node_pos_2, color_path, sleep_time_s, 0)
     elif abs(node_pos_1[0] - node_pos_2[0]) == abs(node_pos_1[1] - node_pos_2[1]):
-        i = - (node_pos_1[0] - node_pos_2[0]) / abs(node_pos_1[0] - node_pos_2[0])
-        j = - (node_pos_1[1] - node_pos_2[1]) / abs(node_pos_1[1] - node_pos_2[1])
-        start_i = node_pos_1[0] + i
-        start_j = node_pos_1[1] + j
-        for k in range(abs(node_pos_1[0] - node_pos_2[0]) - 1):
-            f = pos_to_widget_case.get((start_i, start_j))
-            f.config(bg=color_path)
-            start_i = start_i + i
-            start_j = start_j + j
-            root.update()
-            time.sleep(sleep_time_s)
+        trace_path_diagonals(node_pos_1, node_pos_2, color_path, sleep_time_s)
     else:
-        i = - (node_pos_1[0] - node_pos_2[0]) / abs(node_pos_1[0] - node_pos_2[0])
-        start_i = node_pos_1[0] + i
-        for k in range(abs(node_pos_1[0] - node_pos_2[0])):
-            f = pos_to_widget_case.get((start_i, node_pos_1[1]))
-            f.config(bg=color_path)
-            start_i = start_i + i
-            root.update()
-            time.sleep(sleep_time_s)
-        j = - (node_pos_1[1] - node_pos_2[1]) / abs(node_pos_1[1] - node_pos_2[1])
-        start_j = node_pos_1[1] 
-        for k in range(abs(node_pos_1[1] - node_pos_2[1])):
-            f = pos_to_widget_case.get((start_i - i, start_j))
-            f.config(bg=color_path)
-            start_j = start_j + j
-            root.update()
-            time.sleep(sleep_time_s)
+        axe = 0
+        if is_insertion:
+            print(node_to_xy)
+            if xy_to_node.get((node_pos_2[0], node_pos_1[1]), 'f') != 'f': # eviter de colorer le node en rouge (couleur du path)
+                axe = 1
+            trace_path_random_node(node_pos_1, node_pos_2, color_path, sleep_time_s, axe)
+        else:
+            i = - (node_pos_1[axe] - node_pos_2[axe]) / abs(node_pos_1[axe] - node_pos_2[axe])
+            start_i = node_pos_1[axe] + i
+            f_tmp = pos_to_widget_case.get((start_i, node_pos_1[1]))
+            
+            if f_tmp['background'] != "red": # eviter de colorer le chemin qui n'est pas rouge
+                axe = 1
+            trace_path_random_node(node_pos_1, node_pos_2, color_path, sleep_time_s, axe)
+            pass
 
-def test(node_a, node_b):
-    trace_path(node_to_xy.get(node_a), node_to_xy.get(node_b), "green", 0.08)
+def trace_path_v_or_h(node_pos_1, node_pos_2, color_path, sleep_time_s, axe):
+    f = ()
+    j = - (node_pos_1[axe] - node_pos_2[axe]) / abs(node_pos_1[axe] - node_pos_2[axe])
+    start_j = node_pos_1[axe] + j
+    for tmp in range(abs(node_pos_1[axe] - node_pos_2[axe]) - 1):
+        if axe == 0:
+            f = pos_to_widget_case.get((start_j, node_pos_1[1]))
+        else:
+            f = pos_to_widget_case.get((node_pos_1[0],  start_j))
+        f.config(bg=color_path)
+        start_j = start_j + j
+        root.update()
+        time.sleep(sleep_time_s)
+def trace_path_diagonals(node_pos_1, node_pos_2, color_path, sleep_time_s):
+    i = - (node_pos_1[0] - node_pos_2[0]) / abs(node_pos_1[0] - node_pos_2[0])
+    j = - (node_pos_1[1] - node_pos_2[1]) / abs(node_pos_1[1] - node_pos_2[1])
+    start_i = node_pos_1[0] + i
+    start_j = node_pos_1[1] + j
+    for k in range(abs(node_pos_1[0] - node_pos_2[0]) - 1):
+        f = pos_to_widget_case.get((start_i, start_j))
+        f.config(bg=color_path)
+        start_i = start_i + i
+        start_j = start_j + j
+        root.update()
+        time.sleep(sleep_time_s)
+
+def trace_path_random_node(node_pos_1, node_pos_2, color_path, sleep_time_s, axe):
+    f = ()
+    i = - (node_pos_1[axe] - node_pos_2[axe]) / abs(node_pos_1[axe] - node_pos_2[axe])
+    start_i = node_pos_1[axe] + i
+    for k in range(abs(node_pos_1[axe] - node_pos_2[axe])):
+        if axe == 0:
+            f = pos_to_widget_case.get((start_i, node_pos_1[1]))
+        else:
+            f = pos_to_widget_case.get((node_pos_1[0], start_i))
+        f.config(bg=color_path)
+        start_i = start_i + i
+        root.update()
+        time.sleep(sleep_time_s)
+    axe = (axe + 1) %  2
+    j = - (node_pos_1[axe] - node_pos_2[axe]) / abs(node_pos_1[axe] - node_pos_2[axe])
+    start_j = node_pos_1[axe] 
+    for k in range(abs(node_pos_1[axe] - node_pos_2[axe])):
+        if axe == 0:
+            f = pos_to_widget_case.get((start_j, start_i - i))
+        else:
+            f = pos_to_widget_case.get((start_i - i, start_j))
+        f.config(bg=color_path)
+        start_j = start_j + j
+        root.update()
+        time.sleep(sleep_time_s)
 
 def toggle_insertion(insert_name_char):
     global current_insertion
@@ -114,7 +138,7 @@ def search_e_path(event):
     a = path[0]
     i = 1
     while i < len(path):
-        trace_path(node_to_xy.get(a), node_to_xy.get(path[i]), "green", 0.08)
+        trace_path(node_to_xy.get(a), node_to_xy.get(path[i]), "green", 0.08, False)
         a = path[i]
         print(f"i = {i}")
         i += 1
