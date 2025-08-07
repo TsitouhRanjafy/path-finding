@@ -142,6 +142,9 @@ def toggle_insertion(insert_name_char):
 
 def search_e_path(event):
     global path_count
+    if len(nodes) == 0:
+        set_status("insert node first", False)
+        return
     for node in nodes:
         add_adj(node, list(nodes_adj[node]))
     path = find_euler_path(nodes)
@@ -158,6 +161,9 @@ def search_e_path(event):
         i += 1
     
 def search_h_path(event):
+    if len(nodes) == 0:
+        set_status("insert node first", False)
+        return
     for node in nodes:
         add_adj(node, list(nodes_adj[node]))
     max_path = find_hamiltonian_path(nodes, 0)
