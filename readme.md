@@ -2,7 +2,7 @@
   <a href="README.md">
     <img src="https://img.shields.io/badge/Path_Finding-0d6efd?style=for-the-badge&logoColor=white" alt="Path finding">
   </a>
-  <a href="README.fa.md">
+  <a href="https://github.com/TsitouhRanjafy/path-finding/tags">
     <img src="https://img.shields.io/badge/v1.0.1-198754?style=for-the-badge&logo=version&logoColor=white" alt="version">
   </a>
 <p align="center">
