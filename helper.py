@@ -140,7 +140,6 @@ def toggle_insertion(insert_name_char):
     global current_insertion
     current_insertion = insert_name_char
 
-
 def search_e_path(event):
     global path_count
     for node in nodes:

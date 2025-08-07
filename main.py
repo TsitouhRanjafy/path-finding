@@ -45,18 +45,15 @@ def create_case():
 
 def reinit(event):
     for frame in graph_frame.winfo_children():
-        frame.destroy()  
+        frame["background"] = white_1
     helper.current_node = 0
     del nodes[:]
     del nodes_adj[:]
     node_to_xy.clear()
     xy_to_node.clear()
-    pos_to_widget_case.clear()
     del couple_node_for_path[:]
     helper.current_insertion = 'n'
-    helper.path_count = 0
-
-    create_case()  
+    helper.path_count = 0 
 
 root.geometry(f"{root_w}x{root_h}")
 root.bind("<Configure>", on_resize)
@@ -99,11 +96,11 @@ label.pack()
 o1_f2 = Frame(o1)
 o1_f2.columnconfigure((0,1), weight=1)
 o1_f2.pack(fill=X, expand=True)
-o1_f2_btn_node = Button(o1_f2, text="node", font=("Arial", 13), width=5, height=1)
+o1_f2_btn_node = Button(o1_f2, text="node", font=("Arial", 11, "bold"), width=5, height=1)
 o1_f2_btn_node.bind("<Button-1>", lambda event: toggle_insertion('n'))
 o1_f2_btn_node.grid(column=0, row=0, sticky=NSEW)
 
-o1_f2_btn_path = Button(o1_f2, text="path", font=("Arial", 13), width=5, height=1)
+o1_f2_btn_path = Button(o1_f2, text="path", font=("Arial", 11, "bold"), width=5, height=1)
 o1_f2_btn_path.bind("<Button-1>", lambda eveng: toggle_insertion('p'))
 o1_f2_btn_path.grid(column=1, row=0, sticky=NSEW)
 
@@ -119,9 +116,10 @@ label.pack()
 
 o2_f2 = Frame(o2)
 o2_f2.pack(fill=X, expand=True)
-o2_f2_result = Frame(o2_f2, height=50, bg=white_1)
-o2_f2_result.pack(fill=Y)
-status_label[0] = Label(o2_f2_result, textvariable=status, font=("Arial", 10))
+o2_f2_result = Frame(o2_f2, height=20, width=160, bg=white_1)
+o2_f2_result.pack()
+o2_f2_result.pack_propagate(False)
+status_label[0] = Label(o2_f2_result, textvariable=status, font=("Arial", 10, "bold"), bg=white_1)
 status_label[0].pack()
 
 o3 = Frame(outils_frame, height=100, width=100, bg=black_1, padx=10, pady=5)
@@ -153,11 +151,11 @@ label.pack()
 o4_f2 = Frame(o4)
 o4_f2.columnconfigure((0,1), weight=1)
 o4_f2.pack(fill=X, expand=True)
-o4_f2_btn_search_h_path = Button(o4_f2, text="hamiltonian", font=("Arial", 13), width=5, height=1)
+o4_f2_btn_search_h_path = Button(o4_f2, text="hamiltonian", font=("Arial", 11, "bold"), width=5, height=1)
 o4_f2_btn_search_h_path.bind("<Button-1>", search_h_path)
 o4_f2_btn_search_h_path.grid(column=0, row=0, sticky=NSEW)
 
-o4_f2_btn_e_path = Button(o4_f2, text="euler path", font=("Arial", 13), width=5, height=1)   
+o4_f2_btn_e_path = Button(o4_f2, text="euler path", font=("Arial", 11, "bold"), width=5, height=1)   
 o4_f2_btn_e_path.bind("<Button-1>", search_e_path)
 o4_f2_btn_e_path.grid(column=1, row=0, sticky=NSEW)
 
