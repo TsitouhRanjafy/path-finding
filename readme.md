@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="README.md">
+  <a href="readme.md">
     <img src="https://img.shields.io/badge/Path_Finding-0d6efd?style=for-the-badge&logoColor=white" alt="Path finding">
   </a>
   <a href="https://github.com/TsitouhRanjafy/path-finding/tags">
