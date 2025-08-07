@@ -4,6 +4,7 @@ red_1 = "#FF9E9E"
 green_1 = "#95FF80"
 black_1 = "#292929"
 black_2 = "#AFAFAF"
+black_3 = "#3F3F3F"
 
 border_1 = 1
 border_2 = 2

@@ -54,6 +54,7 @@ def reinit(event):
     pos_to_widget_case.clear()
     del couple_node_for_path[:]
     helper.current_insertion = 'n'
+    helper.path_count = 0
 
     create_case()  
 
@@ -92,7 +93,7 @@ o1_f1 = Frame(o1)
 o1_f1.pack(fill=X, expand=True)
 o1_f1_f_insert = Frame(o1_f1, height=30, width=100, bg=white_1)
 o1_f1_f_insert.pack(fill=Y)
-label = Label(o1_f1_f_insert, text="insert", font=("Arial", 10))
+label = Label(o1_f1_f_insert, text="insert", font=("Arial", 10), fg=black_3)
 label.pack()
 
 o1_f2 = Frame(o1)
@@ -113,16 +114,15 @@ o2_f1 = Frame(o2)
 o2_f1.pack(fill=X, expand=True)
 o2_f1_f_result = Frame(o2_f1, height=50, bg=white_1)
 o2_f1_f_result.pack(fill=Y)
-label = Label(o2_f1_f_result, text="result status", font=("Arial", 10))
+label = Label(o2_f1_f_result, text="status", font=("Arial", 10), fg=black_3)
 label.pack()
 
 o2_f2 = Frame(o2)
 o2_f2.pack(fill=X, expand=True)
-result_val = "unknow"
 o2_f2_result = Frame(o2_f2, height=50, bg=white_1)
 o2_f2_result.pack(fill=Y)
-label = Label(o2_f2_result, text=result_val, font=("Arial", 10))
-label.pack()
+status_label[0] = Label(o2_f2_result, textvariable=status, font=("Arial", 10))
+status_label[0].pack()
 
 o3 = Frame(outils_frame, height=100, width=100, bg=black_1, padx=10, pady=5)
 o3.grid(column=2, row=0, sticky=NSEW)
@@ -131,7 +131,7 @@ o3_f1 = Frame(o3)
 o3_f1.pack(fill=X, expand=True)
 o3_f1_f_speed = Frame(o3_f1, height=30, bg=white_1)
 o3_f1_f_speed.pack(fill=Y)
-label = Label(o3_f1_f_speed, text="speed param", font=("Arial", 10))
+label = Label(o3_f1_f_speed, text="speed param", font=("Arial", 10), fg=black_3)
 label.pack()
 
 o3_f2 = Frame(o3)
@@ -147,7 +147,7 @@ o4_f1 = Frame(o4)
 o4_f1.pack(fill=X, expand=True)
 o4_f1_f_insert = Frame(o4_f1, height=30, width=100, bg=white_1)
 o4_f1_f_insert.pack(fill=Y)
-label = Label(o4_f1_f_insert, text="search", font=("Arial", 10))
+label = Label(o4_f1_f_insert, text="search", font=("Arial", 10), fg=black_3)
 label.pack()
 
 o4_f2 = Frame(o4)

@@ -2,12 +2,13 @@ from config import *
 from interface import *
 import time
 from root import root
-from tkinter import DoubleVar
+from tkinter import DoubleVar, StringVar
 
 
 current_node = 0
 nodes = list()
 nodes_adj = list(set())
+path_count = 0
 node_to_xy = dict()
 xy_to_node = dict()
 couple_node_for_path = list()
@@ -15,18 +16,19 @@ pos_to_widget_case = dict()
 current_insertion = 'n' # 'n' for node / 'p' for path
 spin_val = DoubleVar()
 spin_val.set(5)
+status = StringVar()
+status.set("")
+status_label = {}
 
 
 def on_case_cliked(col, row, event):
-    if current_insertion == 'n':
-        handle_node_insertion(col, row, event)
-    else:
-        handle_path_insertion(col, row, event)
+    if current_insertion == 'n': handle_node_insertion(col, row, event)
+    else: handle_path_insertion(col, row, event)
 
 def handle_node_insertion(col, row, event):
     global current_node, xy_to_node
     event.widget.config(bg=black_1)
-    if xy_to_node.get((col,row), 'f') != 'f':
+    if xy_to_node.get((col,row), 'f') != 'f': 
         return
     nodes.append(current_node)
     nodes_adj.append(set())
@@ -35,7 +37,7 @@ def handle_node_insertion(col, row, event):
     current_node += 1
 
 def handle_path_insertion(col, row, event):
-    global couple_node_for_path
+    global couple_node_for_path, path_count
     if xy_to_node.get((col, row), 'f') == 'f':
         return
     if (len(couple_node_for_path) == 1) and (couple_node_for_path[0] == (col, row)):
@@ -48,6 +50,7 @@ def handle_path_insertion(col, row, event):
         nodes_adj[xy_to_node.get(couple_node_for_path[1])].add(xy_to_node.get(couple_node_for_path[0]))
         trace_path(couple_node_for_path[0], couple_node_for_path[1], "red", 0.005, True, False)
         couple_node_for_path = list()
+        path_count += 1
 
 def  trace_path(node_pos_1, node_pos_2, color_path, sleep_time_s, is_insertion, is_travel):
     if node_pos_1[0] == node_pos_2[0]:
@@ -139,12 +142,14 @@ def toggle_insertion(insert_name_char):
 
 
 def search_e_path(event):
+    global path_count
     for node in nodes:
-        # print(f"{node}: {list(nodes_adj[node])}")
         add_adj(node, list(nodes_adj[node]))
     path = find_euler_path(nodes)
-    # print(f"euler path: {path}")
-    if len(path)== 0:
+    if (len(path) - 1) != path_count: set_status("not found", False)
+    else: set_status("ok", True)
+
+    if len(path) == 0:
         return
     a = path[0]
     i = 1
@@ -155,7 +160,6 @@ def search_e_path(event):
     
 def search_h_path(event):
     for node in nodes:
-        # print(f"{node}: {list(nodes_adj[node])}")
         add_adj(node, list(nodes_adj[node]))
     max_path = find_hamiltonian_path(nodes, 0)
     for i in range(1, len(nodes)):
@@ -163,7 +167,9 @@ def search_h_path(event):
         if len(max_path) < len(path):
             max_path = path
     
-    # print(f"hamiltonian path: {path}")
+    if len(max_path) != len(nodes): set_status("not found", False)
+    else: set_status("ok", True)
+
     if len(max_path)== 0:
         return
     a = max_path[0]
@@ -176,3 +182,8 @@ def search_h_path(event):
         f.config(bg="blue")
         a = max_path[i]
         i += 1
+
+def set_status(message, is_ok):
+    status.set(message)
+    if is_ok: status_label.get(0).config(fg="green") 
+    else: status_label.get(0).config(fg="red")
