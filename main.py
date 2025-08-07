@@ -51,6 +51,10 @@ def reinit(event):
     del nodes_adj[:]
     node_to_xy.clear()
     xy_to_node.clear()
+    pos_to_widget_case.clear()
+    del couple_node_for_path[:]
+    helper.current_insertion = 'n'
+
     create_case()  
 
 root.geometry(f"{root_w}x{root_h}")
@@ -69,7 +73,7 @@ icon = PhotoImage(file="reload.png")
 reinit_btn = Button(root, width=24, height=24, image=icon, bg=white_1)
 reinit_btn.place(x=10, y=10)
 reinit_btn.image = icon
-reinit_btn.bind("<Button-1>", lambda event: test(0, 1))
+reinit_btn.bind("<Button-1>", reinit)
 
 create_case()
 

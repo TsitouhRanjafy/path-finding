@@ -4,7 +4,6 @@ import time
 from root import root
 
 
-# VARIABLE
 current_node = 0
 nodes = list()
 nodes_adj = list(set())
@@ -110,6 +109,8 @@ def search_e_path(event):
         add_adj(node, list(nodes_adj[node]))
     path = find_euler_path(nodes)
     print(f"path euler: {path}")
+    if len(path)== 0:
+        return
     a = path[0]
     i = 1
     while i < len(path):
