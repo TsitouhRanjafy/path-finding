@@ -20,6 +20,6 @@ void hm_put(KV_ITEM **adj, size_t key, size_t *item);
 void free_graph(KV_ITEM **adj);
 size_t *dfs(KV_ITEM *adj, size_t *node, size_t node_n, size_t origin);
 size_t *EulerPathByFleury(KV_ITEM *adj, size_t *node, size_t node_n);
-size_t *HamiltonienPathByFleury(KV_ITEM *adj, size_t *node,size_t node_n);
+size_t *HamiltonienPathByFleury(KV_ITEM *adj, size_t *node, size_t node_n, size_t origin_i);
 
 #endif

@@ -20,7 +20,7 @@ _mylib.hm_put.argtypes = [POINTER(POINTER(KV_ITEM)), c_size_t, POINTER(c_size_t)
 _mylib.free_graph.argtypes = [POINTER(POINTER(KV_ITEM))]
 _mylib.EulerPathByFleury.argtypes = [POINTER(KV_ITEM), POINTER(c_size_t), c_size_t]
 _mylib.EulerPathByFleury.restype = POINTER(c_size_t)
-_mylib.HamiltonienPathByFleury.argtypes = [POINTER(KV_ITEM), POINTER(c_size_t), c_size_t]
+_mylib.HamiltonienPathByFleury.argtypes = [POINTER(KV_ITEM), POINTER(c_size_t), c_size_t, c_size_t]
 _mylib.HamiltonienPathByFleury.restype = POINTER(c_size_t)
 
 # init graph
@@ -43,9 +43,9 @@ def find_euler_path(list_node):
         return []
     return euler_chemin[:_mylib.arr_len(euler_chemin)]
 
-def find_hamiltonian_path(list_node):
+def find_hamiltonian_path(list_node, origin):
     global hamiltonian_chemin
-    hamiltonian_chemin = _mylib.HamiltonienPathByFleury(adj, (c_size_t * len(list_node))(*list_node), len(list_node))
+    hamiltonian_chemin = _mylib.HamiltonienPathByFleury(adj, (c_size_t * len(list_node))(*list_node), len(list_node), origin)
     if not hamiltonian_chemin:
         return []
     return hamiltonian_chemin[:_mylib.arr_len(hamiltonian_chemin)]
@@ -67,4 +67,3 @@ def print_path(path):
 # free
 _mylib.free_graph(adj)
 _mylib.arr_free(euler_chemin)
-print(_mylib)

@@ -140,7 +140,7 @@ def search_e_path(event):
         # print(f"{node}: {list(nodes_adj[node])}")
         add_adj(node, list(nodes_adj[node]))
     path = find_euler_path(nodes)
-    print(f"euler path: {path}")
+    # print(f"euler path: {path}")
     if len(path)== 0:
         return
     a = path[0]
@@ -154,17 +154,22 @@ def search_h_path(event):
     for node in nodes:
         # print(f"{node}: {list(nodes_adj[node])}")
         add_adj(node, list(nodes_adj[node]))
-    path = find_hamiltonian_path(nodes)
-    print(f"hamiltonian path: {path}")
-    if len(path)== 0:
+    max_path = find_hamiltonian_path(nodes, 0)
+    for i in range(1, len(nodes)):
+        path = find_hamiltonian_path(nodes, i)
+        if len(max_path) < len(path):
+            max_path = path
+    
+    # print(f"hamiltonian path: {path}")
+    if len(max_path)== 0:
         return
-    a = path[0]
+    a = max_path[0]
     f = pos_to_widget_case.get((node_to_xy.get(a)))
     f.config(bg="blue")
     i = 1
-    while i < len(path):
-        trace_path(node_to_xy.get(a), node_to_xy.get(path[i]), "green", 0.2, False, True)
-        f = pos_to_widget_case.get((node_to_xy.get(path[i])))
+    while i < len(max_path):
+        trace_path(node_to_xy.get(a), node_to_xy.get(max_path[i]), "green", 0.2, False, True)
+        f = pos_to_widget_case.get((node_to_xy.get(max_path[i])))
         f.config(bg="blue")
-        a = path[i]
+        a = max_path[i]
         i += 1
