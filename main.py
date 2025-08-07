@@ -106,11 +106,38 @@ o1_f2_btn_path = Button(o1_f2, text="path", font=("Arial", 13), width=5, height=
 o1_f2_btn_path.bind("<Button-1>", lambda eveng: toggle_insertion('p'))
 o1_f2_btn_path.grid(column=1, row=0, sticky=NSEW)
 
-o2 = Frame(outils_frame, height=100, width=100, bg=black_1)
+o2 = Frame(outils_frame, height=100, width=100, bg=black_1, padx=10, pady=5)
 o2.grid(column=1, row=0, sticky=NSEW)
 
-o3 = Frame(outils_frame, height=100, width=100, bg=black_1)
+o2_f1 = Frame(o2)
+o2_f1.pack(fill=X, expand=True)
+o2_f1_f_result = Frame(o2_f1, height=50, bg=white_1)
+o2_f1_f_result.pack(fill=Y)
+label = Label(o2_f1_f_result, text="result status", font=("Arial", 10))
+label.pack()
+
+o2_f2 = Frame(o2)
+o2_f2.pack(fill=X, expand=True)
+result_val = "unknow"
+o2_f2_result = Frame(o2_f2, height=50, bg=white_1)
+o2_f2_result.pack(fill=Y)
+label = Label(o2_f2_result, text=result_val, font=("Arial", 10))
+label.pack()
+
+o3 = Frame(outils_frame, height=100, width=100, bg=black_1, padx=10, pady=5)
 o3.grid(column=2, row=0, sticky=NSEW)
+
+o3_f1 = Frame(o3)
+o3_f1.pack(fill=X, expand=True)
+o3_f1_f_speed = Frame(o3_f1, height=30, bg=white_1)
+o3_f1_f_speed.pack(fill=Y)
+label = Label(o3_f1_f_speed, text="speed param", font=("Arial", 10))
+label.pack()
+
+o3_f2 = Frame(o3)
+o3_f2.pack(fill=X, expand=True)
+s = Spinbox(o3_f2, from_=0.0, to=500.0, textvariable=spin_val, font=("Arial", 9))
+s.pack()
 
 # Check case
 o4 = Frame(outils_frame, height=100, width=100, bg=black_1, padx=10, pady=5)

@@ -3,7 +3,8 @@ import os
 
 # init
 path = os.getcwd()
-_mylib = CDLL(os.path.join(path, "lib/graph.so"))
+_mylib_path = os.path.join(path, "lib/graph.so")
+_mylib = CDLL(_mylib_path)
 
 # define custome type
 class KV_ITEM(Structure):

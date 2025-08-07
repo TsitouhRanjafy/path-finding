@@ -2,6 +2,7 @@ from config import *
 from interface import *
 import time
 from root import root
+from tkinter import DoubleVar
 
 
 current_node = 0
@@ -12,6 +13,8 @@ xy_to_node = dict()
 couple_node_for_path = list()
 pos_to_widget_case = dict()
 current_insertion = 'n' # 'n' for node / 'p' for path
+spin_val = DoubleVar()
+spin_val.set(5)
 
 
 def on_case_cliked(col, row, event):
@@ -146,7 +149,7 @@ def search_e_path(event):
     a = path[0]
     i = 1
     while i < len(path):
-        trace_path(node_to_xy.get(a), node_to_xy.get(path[i]), "green", 0.08, False, False)
+        trace_path(node_to_xy.get(a), node_to_xy.get(path[i]), "green", round((spin_val.get() * 0.01), 2), False, False)
         a = path[i]
         i += 1
     
@@ -168,7 +171,7 @@ def search_h_path(event):
     f.config(bg="blue")
     i = 1
     while i < len(max_path):
-        trace_path(node_to_xy.get(a), node_to_xy.get(max_path[i]), "green", 0.2, False, True)
+        trace_path(node_to_xy.get(a), node_to_xy.get(max_path[i]), "green", round((spin_val.get() * 0.01), 2), False, True)
         f = pos_to_widget_case.get((node_to_xy.get(max_path[i])))
         f.config(bg="blue")
         a = max_path[i]
