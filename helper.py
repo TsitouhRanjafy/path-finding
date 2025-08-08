@@ -152,18 +152,22 @@ def search_e_path(event):
         return
     for node in nodes:
         add_adj(node, list(nodes_adj[node]))
-    path = find_euler_path(nodes)
-    if (len(path) - 1) != path_count: set_status("not found", False)
-    else: set_status("ok", True)
 
-    if len(path) == 0:
-        return
-    a = path[0]
-    i = 1
-    while i < len(path):
-        trace_path(node_to_xy.get(a), node_to_xy.get(path[i]), "green", round((spin_val.get() * 0.01), 2), False, False)
-        a = path[i]
-        i += 1
+    try:
+        path = find_euler_path(nodes)
+        if (len(path) - 1) != path_count: set_status("not found", False)
+        else: set_status("ok", True)
+
+        if len(path) == 0:
+            return
+        a = path[0]
+        i = 1
+        while i < len(path):
+            trace_path(node_to_xy.get(a), node_to_xy.get(path[i]), "green", round((spin_val.get() * 0.01), 2), False, False)
+            a = path[i]
+            i += 1
+    except NameError:
+        print(f"error in euler alog: {NameError}")
     
 def search_h_path(event):
     if len(nodes) == 0:
@@ -171,27 +175,30 @@ def search_h_path(event):
         return
     for node in nodes:
         add_adj(node, list(nodes_adj[node]))
-    max_path = find_hamiltonian_path(nodes, 0)
-    for i in range(1, len(nodes)):
-        path = find_hamiltonian_path(nodes, i)
-        if len(max_path) < len(path):
-            max_path = path
+    try:
+        max_path = find_hamiltonian_path(nodes, 0)
+        for i in range(1, len(nodes)):
+            path = find_hamiltonian_path(nodes, i)
+            if len(max_path) < len(path):
+                max_path = path
     
-    if len(max_path) != len(nodes): set_status("not found", False)
-    else: set_status("ok", True)
+        if len(max_path) != len(nodes): set_status("not found", False)
+        else: set_status("ok", True)
 
-    if len(max_path)== 0:
-        return
-    a = max_path[0]
-    f = pos_to_widget_case.get((node_to_xy.get(a)))
-    f.config(bg="blue")
-    i = 1
-    while i < len(max_path):
-        trace_path(node_to_xy.get(a), node_to_xy.get(max_path[i]), "green", round((spin_val.get() * 0.01), 2), False, True)
-        f = pos_to_widget_case.get((node_to_xy.get(max_path[i])))
+        if len(max_path)== 0:
+            return
+        a = max_path[0]
+        f = pos_to_widget_case.get((node_to_xy.get(a)))
         f.config(bg="blue")
-        a = max_path[i]
-        i += 1
+        i = 1
+        while i < len(max_path):
+            trace_path(node_to_xy.get(a), node_to_xy.get(max_path[i]), "green", round((spin_val.get() * 0.01), 2), False, True)
+            f = pos_to_widget_case.get((node_to_xy.get(max_path[i])))
+            f.config(bg="blue")
+            a = max_path[i]
+            i += 1
+    except NameError:
+        print(f"error in hamiltonian algo: {NameError}")
 
 def set_status(message, is_ok):
     status.set(message)
