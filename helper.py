@@ -139,6 +139,11 @@ def trace_path_random_node(node_pos_1, node_pos_2, color_path, sleep_time_s, axe
 def toggle_insertion(insert_name_char):
     global current_insertion
     current_insertion = insert_name_char
+    if current_insertion == 'n':
+        set_status("node", True)
+    else:
+        set_status("path", True)
+    
 
 def search_e_path(event):
     global path_count

@@ -160,4 +160,5 @@ o4_f2_btn_e_path.bind("<Button-1>", search_e_path)
 o4_f2_btn_e_path.grid(column=1, row=0, sticky=NSEW)
 
 
+set_status("node", True)
 root.mainloop()
