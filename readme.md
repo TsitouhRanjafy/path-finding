@@ -71,12 +71,15 @@ cd path-finding
 python path-finding.py
 ```
 
-  - executable (no need python)
+## 📥 Download
 
-```bash
-cd path-finding
-./path-finding
-```
+You can download the latest pre-built executables for **Windows** and **Linux** from the [Releases](https://github.com/TsitouhRanjafy/path-finding/releases) page.
+
+<p align="center">
+  <a href="https://github.com/TsitouhRanjafy/path-finding/releases">
+    <img src="https://img.shields.io/github/v/release/TsitouhRanjafy/path-finding?style=for-the-badge&color=0d6efd" alt="Latest Release">
+  </a>
+</p>
 
 
 ## License
