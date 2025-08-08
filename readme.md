@@ -5,7 +5,7 @@
   <a href="README.fa.md">
     <img src="https://img.shields.io/github/v/tag/TsitouhRanjafy/path-finding?style=for-the-badge&color=198754" alt="Latest Tag" />
   </a>
-<p align="center">
+</p>
 
 <p align="center">
   <img src="https://img.shields.io/github/stars/TsitouhRanjafy/path-finding?style=social" alt="GitHub Stars" />
