@@ -48,10 +48,8 @@ It provides an interactive way to create nodes, connect them with paths, and run
 
 ## Demo
 
-*(Insert your demo GIF or video link here)*  
-Example:
+<video style="width: 200px" src="https://github.com/user-attachments/assets/0e72b141-1ebd-46bc-be29-f51484dc8fe1" />
 
-[![Demo Video](https://img.shields.io/badge/Watch%20Demo-FF0000?style=for-the-badge&logo=youtube&logoColor=white)]
 
 ---
 
